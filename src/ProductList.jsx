@@ -257,7 +257,7 @@ function ProductList({ onHomeClick }) {
             {/* Header Navigation */}
             <header className="header">
                 <div className="nav-container">
-                    <button className="logo">Paradise Nursery</button>
+                    <button className="logo" onClick={(e) => handleHomeClick(e)}>Paradise Nursery</button>
                     <nav className="nav-links">
                     {/* <button className="nav-link" onClick={(e) => handleHomeClick(e)}>Home</button> */}
                     <button className="nav-link" onClick={(e) => handlePlantsClick(e)}>Plants</button>
@@ -269,9 +269,30 @@ function ProductList({ onHomeClick }) {
                 </div>
             </header>
             {!showCart ? (
-                <div className="product-grid">
-
+            
+                <div className="container">
+                    <h1 className="page-title">Our Collection</h1>
+                    <p className="page-subtitle">Discover the perfect green companion for your space</p>
+                
+                    <div className="category-section">  
+                        <h2 className="category-title">Low Light Plants</h2>
+                        <div className="products-grid" id="lowLightPlants">
+                            <div className='product-card'>
+                                <img src="" alt="" className='product-image'/>
+                                <div className='product-info'>
+                                    <h3 className='product-name'></h3>
+                                    <p className='product-description'></p>
+                                    <div className='product-price'></div>
+                                    <button className='btn-add-cart'>
+                                    <span>🛒</span> Add to Cart
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                
                 </div>
+
             ) : (
                 <CartItem onContinueShopping={handleContinueShopping} />
             )}
