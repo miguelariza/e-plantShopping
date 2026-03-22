@@ -7,6 +7,7 @@ function ProductList({ onHomeClick }) {
     const [showCart, setShowCart] = useState(false);
     const [showPlants, setShowPlants] = useState(false); // State to control the visibility of the About Us page
     const plantItems = useSelector((state) => state.items);
+    const dispatch = useDispatch();
 
     const plantsArray = [
         {
@@ -291,7 +292,7 @@ function ProductList({ onHomeClick }) {
                                     <h3 className='product-name'>{plant.name}</h3>
                                     <p className='product-description'>{plant.description}</p>
                                     <div className='product-price'>{plant.cost}</div>
-                                    <button className='btn-add-cart' onClick={() => handleAddToCart(index)}>
+                                    <button className={`btn-add-cart ${handleAddToCart ? 'hover' : 'added'}`} onClick={() => handleAddToCart(index)}>
                                     <span>🛒</span> Add to Cart
                                     </button>
                                     </div>
