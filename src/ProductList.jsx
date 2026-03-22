@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import './ProductList.css'
 import CartItem from './CartItem';
+import { useDispatch, useSelector } from 'react-redux';
+import { addItem, removeItem, updateQuantity } from './CartSlice';
 function ProductList({ onHomeClick }) {
     const [showCart, setShowCart] = useState(false);
     const [showPlants, setShowPlants] = useState(false); // State to control the visibility of the About Us page
+    const plantItems = useSelector((state) => state.items);
 
     const plantsArray = [
         {
@@ -252,6 +255,9 @@ function ProductList({ onHomeClick }) {
         e.preventDefault();
         setShowCart(false);
     };
+    const handleAddToCart = (e) => {
+        dispatch(addItem(e));
+    };
     return (
         <div>
             {/* Header Navigation */}
@@ -273,23 +279,28 @@ function ProductList({ onHomeClick }) {
                 <div className="container">
                     <h1 className="page-title">Our Collection</h1>
                     <p className="page-subtitle">Discover the perfect green companion for your space</p>
-                
+                    {plantsArray.map((item, index) => (
                     <div className="category-section">  
-                        <h2 className="category-title">Low Light Plants</h2>
-                        <div className="products-grid" id="lowLightPlants">
-                            <div className='product-card'>
-                                <img src="" alt="" className='product-image'/>
-                                <div className='product-info'>
-                                    <h3 className='product-name'></h3>
-                                    <p className='product-description'></p>
-                                    <div className='product-price'></div>
-                                    <button className='btn-add-cart'>
+                        <h2 className="category-title" key={index}>{item.category}</h2>
+                        <div className="products-grid" id={item.category}>
+                            
+                            {item.plants.map((plant, index) => (
+                                <div className='product-card' key={index}>
+                                    <img src={plant.image} alt={plant.name} className='product-image'/>
+                                    <div className='product-info'>
+                                    <h3 className='product-name'>{plant.name}</h3>
+                                    <p className='product-description'>{plant.description}</p>
+                                    <div className='product-price'>{plant.cost}</div>
+                                    <button className='btn-add-cart' onClick={() => handleAddToCart(index)}>
                                     <span>🛒</span> Add to Cart
                                     </button>
+                                    </div>
                                 </div>
-                            </div>
+                            ))}
+                            
                         </div>
                     </div>
+                    ))}
                 
                 </div>
 
