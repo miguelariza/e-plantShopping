@@ -6,6 +6,7 @@ import { addItem, removeItem, updateQuantity } from './CartSlice';
 function ProductList({ onHomeClick }) {
     const [showCart, setShowCart] = useState(false);
     const [showPlants, setShowPlants] = useState(false); // State to control the visibility of the About Us page
+    const [disabledButtons, setDisabledButtons] = useState({});
     const plantItems = useSelector((state) => state.items);
     const dispatch = useDispatch();
 
@@ -256,8 +257,12 @@ function ProductList({ onHomeClick }) {
         e.preventDefault();
         setShowCart(false);
     };
-    const handleAddToCart = (e) => {
-        dispatch(addItem(e));
+    const handleAddToCart = (index) => {
+        setDisabledButtons(prev => ({
+            ...prev,
+            [index]: true,
+        }));
+        dispatch(addItem(index));
     };
     return (
         <div>
@@ -285,16 +290,18 @@ function ProductList({ onHomeClick }) {
                         <h2 className="category-title" key={index}>{item.category}</h2>
                         <div className="products-grid" id={item.category}>
                             
-                            {item.plants.map((plant, index) => (
-                                <div className='product-card' key={index}>
+                            {item.plants.map((plant, pIndex) => (
+                                <div className='product-card' key={pIndex}>
                                     <img src={plant.image} alt={plant.name} className='product-image'/>
                                     <div className='product-info'>
                                     <h3 className='product-name'>{plant.name}</h3>
                                     <p className='product-description'>{plant.description}</p>
                                     <div className='product-price'>{plant.cost}</div>
-                                    <button className={`btn-add-cart ${handleAddToCart ? 'hover' : 'added'}`} onClick={() => handleAddToCart(index)}>
-                                    <span>🛒</span> Add to Cart
-                                    </button>
+                                    <button className="btn-add-cart"
+                                        onClick={() => handleAddToCart(pIndex)}
+                                        disabled={disabledButtons[pIndex]}
+                                        >
+                                    <span>🛒</span> Add to cart {pIndex} </button>
                                     </div>
                                 </div>
                             ))}

@@ -121,6 +121,13 @@
     background-color: var(--light-green);
 }
 
-.btn-add-cart.added {
-    background-color: var(--accent-green);
+.btn-add-cart:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    background-color: #cccccc;
+}
+
+.btn-add-cart:disabled:hover {
+    transform: none;
+    cursor: not-allowed;
 }
