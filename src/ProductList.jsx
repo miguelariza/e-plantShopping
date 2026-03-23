@@ -257,10 +257,11 @@ function ProductList({ onHomeClick }) {
         e.preventDefault();
         setShowCart(false);
     };
-    const handleAddToCart = (index) => {
+    const handleAddToCart = (categoryId, productId, index) => {
+        const compositeKey = `${categoryId}_${productId}`;
         setDisabledButtons(prev => ({
             ...prev,
-            [index]: true,
+            [compositeKey]: true,
         }));
         dispatch(addItem(index));
     };
@@ -285,26 +286,30 @@ function ProductList({ onHomeClick }) {
                 <div className="container">
                     <h1 className="page-title">Our Collection</h1>
                     <p className="page-subtitle">Discover the perfect green companion for your space</p>
-                    {plantsArray.map((item, index) => (
+                    {plantsArray.map((item, categoryId) => (
                     <div className="category-section">  
-                        <h2 className="category-title" key={index}>{item.category}</h2>
+                        <h2 className="category-title" key={categoryId}>{item.category}</h2>
                         <div className="products-grid" id={item.category}>
                             
-                            {item.plants.map((plant, pIndex) => (
-                                <div className='product-card' key={pIndex}>
+                            {item.plants.map((plant, productId) => {
+                                const compositeKey = `${categoryId}_${productId}`;
+                                return (
+                                    <div className='product-card' key={productId}>
                                     <img src={plant.image} alt={plant.name} className='product-image'/>
                                     <div className='product-info'>
                                     <h3 className='product-name'>{plant.name}</h3>
                                     <p className='product-description'>{plant.description}</p>
                                     <div className='product-price'>{plant.cost}</div>
                                     <button className="btn-add-cart"
-                                        onClick={() => handleAddToCart(pIndex)}
-                                        disabled={disabledButtons[pIndex]}
+                                        onClick={() => handleAddToCart(categoryId, productId, plant)}
+                                        disabled={disabledButtons[compositeKey]}
                                         >
-                                    <span>🛒</span> Add to cart {pIndex} </button>
+                                    <span>🛒</span> {disabledButtons[compositeKey] ? 'Added' : 'Add to cart'}</button>
                                     </div>
-                                </div>
-                            ))}
+                                    </div>
+                                );
+                                
+                            })}
                             
                         </div>
                     </div>
