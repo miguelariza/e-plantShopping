@@ -7,7 +7,7 @@ function ProductList({ onHomeClick }) {
     const [showCart, setShowCart] = useState(false);
     const [showPlants, setShowPlants] = useState(false); // State to control the visibility of the About Us page
     const [disabledButtons, setDisabledButtons] = useState({});
-    const plantItems = useSelector((state) => state.items);
+    //const cartItems = useSelector((state) => state.cartItem.cart.length);
     const dispatch = useDispatch();
 
     const plantsArray = [
@@ -276,7 +276,7 @@ function ProductList({ onHomeClick }) {
                     <button className="nav-link" onClick={(e) => handlePlantsClick(e)}>Plants</button>
                     <button className="cart-icon" onClick={(e) => handleCartClick(e)}>
                     🛒
-                    <span className="cart-count" id="cartCount">0</span>
+                    <span className="cart-count" id="cartCount">{cartItems}</span>
                     </button>
                     </nav>
                 </div>

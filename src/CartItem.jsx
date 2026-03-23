@@ -62,7 +62,7 @@ const CartItem = ({ onContinueShopping }) => {
         <div className="cart-summary">
             <div className="summary-item">
                 <div className="summary-label">Total Items</div>
-                <div className="summary-value" id="totalItems">0</div>
+                <div className="summary-value" id="totalItems">{cart.length}</div>
             </div>
             <div className="summary-item">
                 <div className="summary-label">Total Cost</div>
@@ -72,6 +72,23 @@ const CartItem = ({ onContinueShopping }) => {
 
         <div className="cart-items" id="cartItems">
             {/* Cart items will be rendered here */}
+            {cart.map((item, id) => (
+                <div className="cart-item" key={id}>
+                <img src={item.image} alt={item.name} className="cart-item-image" onerror="this.src='https://via.placeholder.com/80/4a7c29/ffffff?text={item.name}'" />
+                <div className="cart-item-details">
+                    <h3>{item.name}</h3>
+                    <p>{item.description}</p>
+                </div>
+                <div className="cart-item-price">${item.price}</div>
+                <div className="quantity-controls">
+                    <button className="qty-btn" onclick="updateQuantity(${item.id}, -1)">−</button>
+                    <span className="qty-value">{item.quantity}</span>
+                    <button className="qty-btn" onclick="updateQuantity(${item.id}, 1)">+</button>
+                </div>
+                <div className="cart-item-total">$</div>
+                <button className="btn-delete" onclick="removeFromCart(${item.id})" title="Remove item">🗑️</button>
+            </div>
+            ))};
         </div>
 
         <div className="cart-actions">
