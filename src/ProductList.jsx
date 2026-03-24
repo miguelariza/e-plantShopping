@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './ProductList.css'
 import CartItem from './CartItem';
 import { useDispatch, useSelector } from 'react-redux';
-import { addItem, isProductInCart } from './CartSlice';
+import { addItem, updateQuantity } from './CartSlice';
 function ProductList({ onHomeClick }) {
     const [showCart, setShowCart] = useState(false);
     const [showPlants, setShowPlants] = useState(false); // State to control the visibility of the About Us page
@@ -266,8 +266,11 @@ function ProductList({ onHomeClick }) {
         }));
         dispatch(addItem(index));
     };
-    const handleProductInCart = (item) => {
-        dispatch(isProductInCart);
+    const calculateTotalItems = () => {
+        return cart ? cart.reduce((total, item) => total + item.quantity, 0) : 0;
+    };
+    const isInCart = (index) => {
+        return cart.find(item => item.name === index.name);
     };
     return (
         <div>
@@ -280,7 +283,7 @@ function ProductList({ onHomeClick }) {
                     <button className="nav-link" onClick={(e) => handlePlantsClick(e)}>Plants</button>
                     <button className="cart-icon" onClick={(e) => handleCartClick(e)}>
                     🛒
-                    <span className="cart-count" id="cartCount">{cart.length}</span>
+                    <span className="cart-count" id="cartCount">{calculateTotalItems()}</span>
                     </button>
                     </nav>
                 </div>
@@ -297,9 +300,8 @@ function ProductList({ onHomeClick }) {
                             
                             {item.plants.map((plant, productId) => {
                                 const compositeKey = `${categoryId}_${productId}`;
-                                const inCart = handleProductInCart(productId);
-                                console.log(inCart);
-                                const isDisabled = disabledButtons[compositeKey];
+                                const inCart = isInCart(plant);
+                                //console.log(inCart);
                                 return (
                                     <div className='product-card' key={productId}>
                                     <img src={plant.image} alt={plant.name} className='product-image'/>
@@ -309,9 +311,9 @@ function ProductList({ onHomeClick }) {
                                     <div className='product-price'>{plant.cost}</div>
                                     <button className="btn-add-cart"
                                         onClick={() => handleAddToCart(categoryId, productId, plant)}
-                                        disabled={isDisabled}
+                                        disabled={inCart ? disabledButtons[compositeKey] : ''}
                                         >
-                                    <span>🛒</span> {isDisabled ? 'Added to cart' : 'Add to cart'}</button>
+                                    <span>🛒</span> {inCart ? 'Added to cart' : 'Add to cart'}</button>
                                     </div>
                                     </div>
                                 );
