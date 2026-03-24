@@ -25,6 +25,7 @@ const CartItem = ({ onContinueShopping }) => {
   };
 
   const handleIncrement = (item) => {
+    //console.log(item.name);
     const name = item.name;
     const quantity = item.quantity + 1;
     dispatch(updateQuantity({name, quantity}));
@@ -41,6 +42,7 @@ const CartItem = ({ onContinueShopping }) => {
   };
 
   const handleRemove = (item) => {
+    console.log("inside handleRemove");
     dispatch(removeItem(item));
   };
 
@@ -74,26 +76,26 @@ const CartItem = ({ onContinueShopping }) => {
             {/* Cart items will be rendered here */}
             {cart.map((item, id) => (
                 <div className="cart-item" key={id}>
-                <img src={item.image} alt={item.name} className="cart-item-image" onerror="this.src='https://via.placeholder.com/80/4a7c29/ffffff?text={item.name}'" />
+                <img src={item.image} alt={item.name} className="cart-item-image" onError="this.src='https://via.placeholder.com/80/4a7c29/ffffff?text={item.name}'" />
                 <div className="cart-item-details">
                     <h3>{item.name}</h3>
                     <p>{item.description}</p>
                 </div>
                 <div className="cart-item-price">${item.price}</div>
                 <div className="quantity-controls">
-                    <button className="qty-btn" onclick="updateQuantity(${item.id}, -1)">−</button>
+                    <button className="qty-btn" onClick={() => handleDecrement(item)}>−</button>
                     <span className="qty-value">{item.quantity}</span>
-                    <button className="qty-btn" onclick="updateQuantity(${item.id}, 1)">+</button>
+                    <button className="qty-btn" onClick={() => handleIncrement(item)}>+</button>
                 </div>
-                <div className="cart-item-total">$</div>
-                <button className="btn-delete" onclick="removeFromCart(${item.id})" title="Remove item">🗑️</button>
+                <div className="cart-item-total">${calculateTotalCost(item)}</div>
+                <button className="btn-delete" onClick={() => handleRemove(item)} title="Remove item">🗑️</button>
             </div>
             ))};
         </div>
 
         <div className="cart-actions">
             <button className="btn-secondary" onClick={() => handleContinueShopping()}>Continue Shopping</button>
-            <button className="btn-primary" onClick={() => checkout()}>Checkout</button>
+            <button className="btn-primary" onClick={() => handleCheckoutShopping()}>Checkout</button>
         </div>
     </div>
   );

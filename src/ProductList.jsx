@@ -7,7 +7,7 @@ function ProductList({ onHomeClick }) {
     const [showCart, setShowCart] = useState(false);
     const [showPlants, setShowPlants] = useState(false); // State to control the visibility of the About Us page
     const [disabledButtons, setDisabledButtons] = useState({});
-    //const cartItems = useSelector((state) => state.cartItem.cart.length);
+    const cart = useSelector((state) => state.cart.items);
     const dispatch = useDispatch();
 
     const plantsArray = [
@@ -276,7 +276,7 @@ function ProductList({ onHomeClick }) {
                     <button className="nav-link" onClick={(e) => handlePlantsClick(e)}>Plants</button>
                     <button className="cart-icon" onClick={(e) => handleCartClick(e)}>
                     🛒
-                    <span className="cart-count" id="cartCount">{cartItems}</span>
+                    <span className="cart-count" id="cartCount">{cart.length}</span>
                     </button>
                     </nav>
                 </div>
@@ -304,7 +304,7 @@ function ProductList({ onHomeClick }) {
                                         onClick={() => handleAddToCart(categoryId, productId, plant)}
                                         disabled={disabledButtons[compositeKey]}
                                         >
-                                    <span>🛒</span> {disabledButtons[compositeKey] ? 'Added' : 'Add to cart'}</button>
+                                    <span>🛒</span> {disabledButtons[compositeKey] ? 'Added to cart' : 'Add to cart'}</button>
                                     </div>
                                     </div>
                                 );
