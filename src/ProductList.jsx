@@ -265,6 +265,9 @@ function ProductList({ onHomeClick }) {
         }));
         dispatch(addItem(index));
     };
+    const isInCart = (plant) => {
+        return cart.find(item => item.name === plant.name);
+    };
     return (
         <div>
             {/* Header Navigation */}
@@ -293,6 +296,8 @@ function ProductList({ onHomeClick }) {
                             
                             {item.plants.map((plant, productId) => {
                                 const compositeKey = `${categoryId}_${productId}`;
+                                //const inCart = isInCart(plant);
+                                //console.log("Here: ", inCart);
                                 return (
                                     <div className='product-card' key={productId}>
                                     <img src={plant.image} alt={plant.name} className='product-image'/>
@@ -308,7 +313,6 @@ function ProductList({ onHomeClick }) {
                                     </div>
                                     </div>
                                 );
-                                
                             })}
                             
                         </div>
