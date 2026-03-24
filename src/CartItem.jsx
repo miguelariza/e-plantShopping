@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { removeItem, updateQuantity } from './CartSlice';
+import { removeItem, updateQuantity, isProductInCart } from './CartSlice';
 import './CartItem.css';
 
 const CartItem = ({ onContinueShopping }) => {
@@ -64,7 +64,7 @@ const CartItem = ({ onContinueShopping }) => {
         <div className="cart-summary">
             <div className="summary-item">
                 <div className="summary-label">Total Items</div>
-                <div className="summary-value" id="totalItems">{cart.length}</div>
+                <div className="summary-value" id="totalItems">{updateQuantity()}</div>
             </div>
             <div className="summary-item">
                 <div className="summary-label">Total Cost</div>
@@ -94,7 +94,7 @@ const CartItem = ({ onContinueShopping }) => {
         </div>
 
         <div className="cart-actions">
-            <button className="btn-secondary" onClick={() => handleContinueShopping()}>Continue Shopping</button>
+            <button className="btn-secondary" onClick={(e) => handleContinueShopping(e)}>Continue Shopping</button>
             <button className="btn-primary" onClick={() => handleCheckoutShopping()}>Checkout</button>
         </div>
     </div>
