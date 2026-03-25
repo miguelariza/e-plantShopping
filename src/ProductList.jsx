@@ -277,7 +277,10 @@ function ProductList({ onHomeClick }) {
             {/* Header Navigation */}
             <header className="header">
                 <div className="nav-container">
+                    <div>
                     <button className="logo" onClick={(e) => handleHomeClick(e)}>Paradise Nursery</button>
+                    <span className="nav-tagline">Bringing Nature Home, One Plant at a Time</span>
+                    </div>
                     <nav className="nav-links">
                     {/* <button className="nav-link" onClick={(e) => handleHomeClick(e)}>Home</button> */}
                     <button className="nav-link" onClick={(e) => handlePlantsClick(e)}>Plants</button>

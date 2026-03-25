@@ -132,3 +132,11 @@
     transform: none;
     cursor: not-allowed;
 }
+
+.nav-tagline {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: normal;
+    color: #1e4620;
+    margin-top: 0.5rem;
+}

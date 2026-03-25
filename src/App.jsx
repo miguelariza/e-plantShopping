@@ -27,7 +27,7 @@ function App() {
                 </div>
             </section>
         </div>
-        <div className={`product-list-container ${showProductList ? 'visible' : ''}`}>
+        <div className={`product-list-container ${showProductList ? 'visible' : 'hidden'}`}>
         <ProductList onHomeClick={handleHomeClick}/>
       </div>
     </div>
